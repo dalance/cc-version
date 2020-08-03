@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         rust: [stable]
 
     runs-on: ${{ matrix.os }}
@@ -21,9 +21,10 @@ jobs:
       uses: hecrj/setup-rust-action@v1
       with:
         rust-version: ${{ matrix.rust }}
-    - name: Setup gcc
-      run: gcc -dumpversion
     - name: Checkout
       uses: actions/checkout@v1
     - name: Run tests
       run: cargo test
+    - name: Run build tests
+      run: cargo build
+      working-directory: ./build_test
