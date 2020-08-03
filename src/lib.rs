@@ -99,6 +99,7 @@ pub fn cc_version(tool: &Tool) -> Result<Version, Error> {
         let version = String::from_utf8_lossy(&ret.stdout);
         Ok(Version::parse(version.trim())?)
     } else if tool.is_like_msvc() {
+        dbg!(tool.to_command());
         let ret = std::process::Command::new("cl")
             .output()
             .map_err(Error::from)?;
