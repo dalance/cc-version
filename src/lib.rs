@@ -99,14 +99,12 @@ pub fn cc_version(tool: &Tool) -> Result<Version, Error> {
         let version = String::from_utf8_lossy(&ret.stdout);
         Ok(Version::parse(version.trim())?)
     } else if tool.is_like_msvc() {
-        dbg!(tool.to_command());
-        //let ret = std::process::Command::new("cl")
-        //    .output()
-        //    .map_err(Error::from)?;
-        let ret = std::process::Command::new("cl.exe")
+        let command = format!("{:?}", tool.to_command());
+        let command: Vec<_> = command.split("\"").collect();
+        let command = command[1].replace("\\\\", "\\");
+        let ret = std::process::Command::new(command)
             .output()
             .map_err(Error::from)?;
-        dbg!(&ret.stderr);
         let version = String::from_utf8_lossy(&ret.stderr);
         let version = get_msvc_version(&version);
         Ok(Version::parse(version.trim())?)
