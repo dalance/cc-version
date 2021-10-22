@@ -8,7 +8,7 @@ categories = []
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 description = "cc version detection for build.rs"
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
